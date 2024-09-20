@@ -18,8 +18,8 @@ export const Description = () => {
   };
   return(
     <section>
-      <DogImage url={dogUrl}/> 
-      <button onClick={randomDog} className='dogButton'></button>
+      <DogImage imageUrl ={dogUrl}/> 
+      <button onClick={randomDog} className='dogButton'>犬の画像を変更</button>
     </section>
   )
   
