@@ -1,10 +1,10 @@
 // @ts-check
+import { useState } from "react";
 /**
  *@param {{ breeds: string[], selectedBreed: string, onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void }} props
  */
 
 export const BreedsSelect = ({breeds, selectedBreed, onChange}) => {
-
   return(
     <select value={selectedBreed} onChange={onChange}>
       <option value="">犬種を選ぶ</option>

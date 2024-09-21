@@ -7,7 +7,7 @@ import React from 'react';
 export const DogImage = ({ imageUrl }) => {
   return (
     
-    <img src= {imageUrl} />
+    <img src= {imageUrl} className='dogImage'/>
     
   );
 }
