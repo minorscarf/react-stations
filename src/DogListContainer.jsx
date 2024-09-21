@@ -9,8 +9,6 @@ export const DogListContainer = () => {
   const [selectedBreed, setSelectedBreed] = useState("");
   const [dogImages, setDogImages] = useState([]);
 
-  const [error, setError] = useState("");
-
   useEffect(() => {
     fetch('https://dog.ceo/api/breeds/list/all')
     .then(response => response.json())
@@ -23,19 +21,28 @@ export const DogListContainer = () => {
     if(selectedBreed){
       setUrl(`https://dog.ceo/api/breed/${selectedBreed}/images/random/5`);
     }
+    else{
+      setUrl('https://dog.ceo/api/breed/${selectedBreed}/images/random/5');
+    }
   },[selectedBreed]);
 
   const GetDogImages = async () => {
-    setError("");  // エラーメッセージをリセット
-    if (url) {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("画像の取得に失敗しました");
-        }
-        const data = await response.json();
-        setDogImages(data.message);  
+    try {
+      const breed = selectedBreed || "akita";  // 犬種が選択されていない場合、デフォルトで "hound" を使用
+      const url = `https://dog.ceo/api/breed/${breed}/images/random/5`;
+      
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("画像の取得に失敗しました");
+      }
+      
+      const data = await response.json();
+      setDogImages(data.message);  // 取得した画像リストをセット
+    } catch (error) {
+      console.error("Error fetching images:", error);
     }
   };
+  
   
 
   /**
@@ -54,7 +61,6 @@ export const DogListContainer = () => {
       />
       <button onClick={GetDogImages}> 表示</button>
       {selectedBreed && <p>Selected Breed: {selectedBreed}</p>} 
-      <p style={{ color: "red" }}>{error}</p>
       <ul>
         {dogImages.map((dogImage, index) => (
           <li key={index}>
